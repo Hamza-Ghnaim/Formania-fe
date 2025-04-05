@@ -1,31 +1,39 @@
 import React, { useState } from "react";
-import { login } from "../Services/AuthService";
+import { register } from "../../Services/AuthService";
+import { useNavigate } from "react-router-dom";
 
-export const LoginView = () => {
+export const RegistrationView = () => {
   const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
-
+  const navigate = useNavigate();
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setErrorMessage("");
-
     try {
-      const userData = { email, password };
-      const data = await login(userData);
-      console.log("Login successful:", data);
+      const userData = { email, password, username };
+      const data = await register(userData);
+      console.log("successfull registration", data);
+      navigate("/login");
     } catch (error: any) {
-      // Handle the error properly
-      const message = error.Message || "Something went wrong";
-      setErrorMessage(message);
-      console.log("Login failed:", error);
+      setErrorMessage(error.message);
     }
   };
-
   return (
-    <>
-      <div>LoginView</div>
+    <div>
+      <div>Registration View</div>
       <form onSubmit={handleSubmit}>
+        <div>
+          <label htmlFor="username">User Name :</label>
+          <input
+            type="text"
+            id="username"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            required
+          />
+        </div>
         <div>
           <label htmlFor="email">Email : </label>
           <input
@@ -46,9 +54,9 @@ export const LoginView = () => {
             required
           />
         </div>
-        <button type="submit">Login</button>
+        <button type="submit">Sign Up</button>
       </form>
       {errorMessage && <div style={{ color: "red" }}>{errorMessage}</div>}
-    </>
+    </div>
   );
 };
