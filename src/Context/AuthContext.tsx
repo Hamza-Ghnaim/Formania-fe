@@ -25,32 +25,6 @@ const AuthContext = createContext<AuthContextType | any>(null);
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [state, dispatch] = useReducer(AuthReducer, initialState);
-  console.log(state);
-  // Fetch user on app load
-  // useEffect(() => {
-  //   const checkAuth = async () => {
-  //     try {
-  //       // Use Axios to make the request
-  //       const response = await axios.get("http://localhost:5000/auth/me", {
-  //         withCredentials: true,
-  //       });
-
-  //       if (response.status === 200) {
-  //         console.log("response ok");
-  //         dispatch({ type: "LOGIN", payload: response.data.user });
-  //       } else {
-  //         console.log("response false");
-  //         dispatch({ type: "LOGOUT" });
-  //       }
-  //     } catch (error) {
-  //       console.error("Error checking authentication:", error);
-  //       dispatch({ type: "LOGOUT" });
-  //     }
-  //   };
-
-  //   checkAuth();
-  //   console.log("i was ran");
-  // }, []);
 
   // Expose actions
   const login = (user: { id: string; email: string }) => {
@@ -63,8 +37,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       credentials: "include",
     });
     dispatch({ type: "LOGOUT" });
-
-    // window.location.href = "auth/login";
   };
 
   const checkAuth = async () => {
