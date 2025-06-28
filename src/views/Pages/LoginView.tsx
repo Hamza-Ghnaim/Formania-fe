@@ -8,13 +8,6 @@ export const LoginView = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
   const { login, user } = useAuth(); // ✅ correct
-  // useEffect(() => {
-  //   const handleLogout = async () => {
-  //     await logout();
-  //     navigate("/login");
-  //   };
-  //   handleLogout();
-  // }, []);
 
   useEffect(() => {
     if (user) {
