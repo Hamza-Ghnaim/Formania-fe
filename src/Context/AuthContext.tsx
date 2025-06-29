@@ -32,7 +32,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   const logout = async () => {
-    await fetch("http://localhost:5000/logout", {
+    await fetch("http://localhost:5001/logout", {
       method: "POST",
       credentials: "include",
     });
@@ -41,9 +41,10 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   const checkAuth = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/auth/check", {
+      const res = await axios.get("http://localhost:5001/auth/check", {
         withCredentials: true, // Send HTTP-only cookies
       });
+      console.log("checkAuth is:", res);
       dispatch({ type: "LOGIN", payload: res.data });
     } catch (error: any) {
       // Optional: handle unauthorized (e.g., token not present or invalid)

@@ -9,11 +9,10 @@ import { useAuth } from "./Context/AuthContext";
 import { useNavigate } from "react-router-dom";
 function App() {
   const navigate = useNavigate();
-  const { checkAuth, state } = useAuth();
+  const { checkAuth } = useAuth();
   useEffect(() => {
     checkAuth();
   }, [navigate]);
-  console.log(state);
 
   return (
     <div className="App">
