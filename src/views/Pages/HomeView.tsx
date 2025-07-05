@@ -1,12 +1,14 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 export const HomeView = () => {
+  const { lang } = useParams(); // or extract from useLocation()
+
   return (
     <div>
-      <Link to="/login">Login</Link>
+      <Link to={`/${lang}/login`}>Login</Link>
       <hr />
-      <Link to="/register">Sign Up</Link>
+      <Link to={`/${lang}/register`}>Sign Up</Link>
     </div>
   );
 };

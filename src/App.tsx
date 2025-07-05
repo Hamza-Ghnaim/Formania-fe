@@ -1,29 +1,24 @@
-import React, { useEffect } from "react";
-import { Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
+import { RootLayout } from "./Layouts/RootLayout";
 import { HomeView } from "./views/Pages/HomeView";
-import "./App.css";
 import { LoginView } from "./views/Pages/LoginView";
 import { RegistrationView } from "./views/Pages/RegistrationView";
 import MyFormania from "./views/Pages/MyFormania";
-import { useAuth } from "./Context/AuthContext";
-import { useNavigate } from "react-router-dom";
-function App() {
-  const navigate = useNavigate();
-  const { checkAuth } = useAuth();
-  useEffect(() => {
-    checkAuth();
-  }, [navigate]);
 
+// Language-prefixed routes
+export function AppRoutes() {
   return (
-    <div className="App">
-      <Routes>
-        <Route path="/" element={<HomeView />} />
-        <Route path="/login" element={<LoginView />} />
-        <Route path="/register" element={<RegistrationView />} />
-        <Route path="/my-formania" element={<MyFormania />} />
-      </Routes>
-    </div>
+    <Routes>
+      {/* Redirect / → /ar */}
+      <Route path="/" element={<Navigate to="/ar" replace />} />
+
+      {/* All routes under /:lang */}
+      <Route path="/:lang/*" element={<RootLayout />}>
+        <Route index element={<HomeView />} />
+        <Route path="login" element={<LoginView />} />
+        <Route path="register" element={<RegistrationView />} />
+        <Route path="my-formania" element={<MyFormania />} />
+      </Route>
+    </Routes>
   );
 }
-
-export default App;

@@ -1,17 +1,20 @@
 import React, { useEffect, useState } from "react";
 import { login as login_axios } from "../../Services/AuthService";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useAuth } from "../../Context/AuthContext";
+
 export const LoginView = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
+  const { lang } = useParams(); // 👈 get the current lang (either 'ar' or 'en')
+
   const { login, user } = useAuth(); // ✅ correct
 
   useEffect(() => {
     if (user) {
-      navigate("/my-formania");
+      navigate(`/${lang}/my-formania`); // 👈 keep the lang in URL
     }
   }, [user]);
 
@@ -24,7 +27,7 @@ export const LoginView = () => {
       const data = await login_axios(userData);
       console.log("Login successful:", data);
       login(data);
-      navigate("/my-formania");
+      navigate(`/${lang}/my-formania`); // 👈 use lang in redirection
     } catch (error: any) {
       // Handle the error properly
       const message = error.Message || "Something went wrong";
