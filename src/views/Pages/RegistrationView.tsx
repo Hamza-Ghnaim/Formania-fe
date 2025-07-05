@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { register } from "../../Services/AuthService";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useAuth } from "../../Context/AuthContext";
 
 export const RegistrationView = () => {
@@ -12,9 +12,11 @@ export const RegistrationView = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
 
+  const { lang } = useParams(); // 👈 get the current lang (either 'ar' or 'en')
+
   useEffect(() => {
     if (user) {
-      navigate("/my-formania");
+      navigate(`/${lang}/my-formania`); // 👈 keep the lang in URL
     }
   }, [user]);
 
@@ -25,7 +27,7 @@ export const RegistrationView = () => {
       const userData = { email, password, username };
       const data = await register(userData);
       console.log("successfull registration", data);
-      navigate("/login");
+      navigate(`/${lang}/my-formania`); // 👈 use lang in redirection
     } catch (error: any) {
       setErrorMessage(error.message);
     }
